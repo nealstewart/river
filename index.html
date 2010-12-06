@@ -1,0 +1,263 @@
+<html>
+
+<head>
+  <title>Test River</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js></script>
+  <script src=https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js></script>
+  <script src=underscore.js></script>
+  <script src=backbone.js></script>
+  <script src=backbone-localstorage.js></script>
+  <script>(function(window, document, undefined) {
+    function River() {
+        this.trash = new TrashView({
+          el : $('#trash')  
+        });
+
+        this.collections = {
+          backlog : new Stage([], {
+            localStorage : new Store('river-backlog') 
+          }),
+          currentIteration : new Stage([], {
+            localStorage : new Store('river-currentIteration') 
+          }),
+          inProgress : new Stage([], {
+            localStorage : new Store('river-inProgress') 
+          }),
+          review : new Stage([], {
+            localStorage : new Store('river-review') 
+          })
+        };
+
+        _(this.collections).each(function(col) { col.fetch(); });
+
+        this.views = {
+          backlogView : new StageView({
+            collection : this.collections.backlog,
+            el : $('#backlog')
+          }),
+
+          currentIterationView : new StageView({
+            collection : this.collections.currentIteration,
+            el : $('#current_iteration')
+          }),
+
+          inProgressView : new StageView({
+            collection : this.collections.inProgress,
+            el : $('#in_progress')
+          }),
+
+          reviewView : new StageView({
+            collection : this.collections.review,
+            el : $('#review')
+          }),
+
+          storyCreatorView : new StoryCreatorView({
+            collection : this.collections.backlog,
+            el : $('#story_adder')
+          })
+        };
+
+        _(this.views).each(function(view) { view.render() });
+      };
+
+      var Story = Backbone.Model.extend({});
+
+      var Stage = Backbone.Collection.extend({
+        model : Story,
+        initialize : function(models, options) {
+          if (!options.localStorage) { throw "no localStorage!" };
+
+          this.localStorage = options.localStorage;
+        },
+        comparator : function(story) {
+          return story.get('sort_num');
+        }
+      });
+
+      var StageView = Backbone.View.extend({
+        className : 'stage',
+        tagName : 'ul',
+
+        initialize : function() {
+          var that = this;
+
+          this.storyViews = [],
+
+          this.collection.each(function(story) {
+            that.add(story);
+          });
+
+          this.collection.bind('add', function(story, collection) {
+            if (this !== collection) return;
+            var view = that.add(story, true);
+          });
+
+          this.collection.bind('remove', function(story, collection) {
+            if (this !== collection) return;
+            var view = that.remove(story);
+          });
+        },
+
+        add : function(story, shouldRender) {
+          var view = new StoryView({model : story});
+          this.storyViews.push(view);
+
+          if (shouldRender) {
+            if (this.$('#story-' + story.cid).size() == 0) {
+               $(this.el).append(view.render().el);
+            }
+          }
+
+          return view;
+        },
+
+        remove : function(story) {
+          var view = _(this.storyViews).each(function(view) {
+            return view.model === story;
+          });
+          this.storyViews = _(this.storyViews).without(view);
+        },
+
+        recalculateSort : function() {
+          var sortIterator = 0;
+          this.$('li').each(function(index, element) {
+            window.elementtolookat = element;
+            var model = $(element).data('river-model');
+            model.set({sort_num : index});
+            model.save();
+          });
+        },
+
+        render : function() {
+          var that = this;
+
+          this.$('*').remove();
+
+          _(this.storyViews).each(function(view) {
+            $(that.el).append(view.render().el);
+          });
+
+          $(this.el).sortable({
+            connectWith : ".stage",
+            placeholder : 'story-placeholder',
+            update : function() {
+              that.recalculateSort();
+            },
+
+            receive : function(event, ui) {
+              console.log
+              var model = ui.item.data('river-model');
+              model = that.collection.create(model);
+              ui.item.data('river-model', model);
+              that.recalculateSort();
+            },
+
+            remove : function(event, ui) {
+              var model = ui.item.data('river-model');
+              model.destroy();
+            }
+          });
+
+          $(this.el).addClass('stage');
+
+          return this;
+        }
+      });
+
+      var StoryView = Backbone.View.extend({
+        className : 'story',
+        tagName : 'li',
+
+        render : function() {
+          this.$('*').remove();
+          $(this.el).html('');
+          $(this.el).text(this.model.get('description'));
+          $(this.el).data('river-model', this.model);
+          $(this.el).attr('id', "story-" + this.model.cid);
+
+          return this;
+        }
+      });
+
+      var TrashView = Backbone.View.extend({
+        initialize : function() {
+          $(this.el).droppable({
+            accept : '.story',
+            drop : function(event, ui) {
+              var model = ui.draggable.data('river-model');
+              model.destroy();
+              ui.draggable.remove();
+            }
+          });
+        }
+      });
+
+      var StoryCreatorView = Backbone.View.extend({
+        events : {
+          "submit" : "create"
+        },
+
+        create : function(event) {
+          var textarea = this.$('textarea'),
+              description = textarea.val();
+
+          textarea.val('');
+
+          this.collection.create({
+            description : description,
+            sort_num : this.collection.length
+          });
+
+          event.preventDefault();
+
+          return false;
+        }
+      });
+
+      $(function() {
+        window.river = new River();
+      });
+
+  })(this, this.document);</script>
+</head>
+
+<body>
+  <form id="story_adder">
+    <textarea placeholder="Add a story" name="story[description]"></textarea>
+    <button type="submit">Add</button>
+  </form>
+
+  <table class=stages>
+    <tr>
+      <th>Backlog</th>
+      <th>Current Iteration</th>
+      <th>In-Progress</th>
+      <th>To Review</th>
+    </tr>
+    <tr>
+      <td>
+        <ul id=backlog>
+        </ul>
+      </td>
+      <td>
+        <ul id=current_iteration>
+        </ul>
+      </td>    
+
+      <td>
+        <ul id=in_progress>
+        </ul>
+      </td>
+
+      <td>
+        <ul id=review>
+        </ul>
+      </td>
+    </tr>
+  </table>
+  <ul id="trash">
+  </ul>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+.stages th {
+  border-bottom: 1px solid #999;
+  font: 20px helvetica sans-serif;
+  color: #EEE;
+}
+
+.stages td {
+  vertical-align: top;
+  width: 23%;
+  border: 1px dashed #999;
+}
+
+.stage header {
+  text-align: center;
+}
+
+.stages ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 500px;
+}
+
+.story {
+  min-height: 100px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.story {
+  padding: 10px;
+  padding-top: 11px;
+  font-size: 16px;
+  line-height: 22px;
+  background: url('index-card.png');
+  color: #447;
+}
+
+.story-placeholder {
+  min-height: 100px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 10px;
+  padding-top: 11px;
+  background: none;
+  background-color: #77777E;
+}
+
+table {
+  width: 969px;
+  border-collapse: collapse;
+  overflow: auto;
+  border: 1px solid black;
+  background-color: #666;
+}
+
+#trash {
+  margin: 0;
+  padding: 0;
+  width: 226px;
+  height: 257px;
+  background: url('trash.jpg');
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 64px;
+  right: 21px;
+}
