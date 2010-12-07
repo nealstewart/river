@@ -152,6 +152,13 @@ var StageView = Backbone.View.extend({
       $(that.el).append(view.render().el);
     });
 
+    $(this.el).delegate('*', 'mousedown', function(evt) {
+      if (this !== document.activeElement) {
+        $(document.activeElement).blur();
+      }
+
+    });
+
     $(this.el).sortable({
       connectWith : ".stage",
       placeholder : 'story-placeholder',
