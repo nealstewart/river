@@ -59,12 +59,12 @@ var StoryView = Backbone.View.extend({
     self.focus();
 
     self.blur(function(evt) {
+      $(this).removeAttr('contenteditable');
+      $(this).parent().sortable('enable');
+
       var model = $(this).data('river-model');
       model.set({description : $(this).text()});
       model.save();
-
-      $(this).removeAttr('contenteditable');
-      $(this).parent().sortable('enable');
     });
 
     self.keypress(function(evt) {
