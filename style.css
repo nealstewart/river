@@ -19,7 +19,9 @@
   margin: 0;
   padding: 0;
   min-height: 500px;
+  height: 100%;
 }
+
 
 .story {
   min-height: 100px;
@@ -31,12 +33,29 @@
 }
 
 .story {
+  font: 20px helvetica sans-serif;
   padding: 10px;
   padding-top: 11px;
   font-size: 16px;
   line-height: 22px;
   background: url('index-card.png');
   color: #447;
+  border-top: 1px solid #666;
+}
+
+.stages form {
+  width: 223px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
+}
+
+textarea.story {
+  width: 223px;
+  height: 125px;
+  margin-top: 20px;
+  margin-bottom: 0;
+  resize: none;
 }
 
 .story-placeholder {
