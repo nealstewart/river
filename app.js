@@ -1,6 +1,16 @@
 (function(window, document, undefined) {
 "use strict";
 
+var River,
+    Story,
+    Stage,
+    StoryList,
+    StageList,
+    StageView,
+    StoryView,
+    StoryCreatorView,
+    TrashView;
+
 var Story = Backbone.Model.extend({});
 var Stage = Backbone.Model.extend({});
 
@@ -40,12 +50,15 @@ var StoryView = Backbone.View.extend({
   tagName : 'li',
 
   onDblclick : function(evt) {
-    $(this).attr('contenteditable', true);
-    $(this).parent().sortable('disable');
+    var that = this,
+        self = $(this);
 
-    $(this).focus();
+    self.attr('contenteditable', true);
+    self.parent().sortable('disable');
 
-    $(this).blur(function(evt) {
+    self.focus();
+
+    self.blur(function(evt) {
       var model = $(this).data('river-model');
       model.set({description : $(this).text()});
       model.save();
@@ -54,7 +67,7 @@ var StoryView = Backbone.View.extend({
       $(this).parent().sortable('enable');
     });
 
-    $(this).keypress(function(evt) {
+    self.keypress(function(evt) {
       if (evt.keyCode == 13) {
         $(this).blur();
 
@@ -210,60 +223,62 @@ var StoryCreatorView = Backbone.View.extend({
   }
 });
 
-function River() {
-  this.stories = new StoryList();
-  this.stories.fetch();
+River = {
+  initialize : function() {
+    this.stories = new StoryList();
+    this.stories.fetch();
+    this.stages = new StageList();
+    this.stages.fetch();
 
-  this.trash = new TrashView({
-    collection : this.stories,
-    el : $('#trash')  
-  });
+    this.backlog = this.stages.findOrCreateByAttribute('name', 'Backlog');
+    this.currentIteration = this.stages.findOrCreateByAttribute('name', 'Current Iteration');
+    this.inProgress = this.stages.findOrCreateByAttribute('name', 'In-Progress');
+    this.underReview = this.stages.findOrCreateByAttribute('name', 'Under Review');
 
-  this.stages = new StageList();
-  this.stages.fetch();
+    var views = {
+      trashView : new TrashView({
+        collection : this.stories,
+        el : $('#trash')  
+      }),
 
-  this.backlog = this.stages.findOrCreateByAttribute('name', 'Backlog');
-  this.currentIteration = this.stages.findOrCreateByAttribute('name', 'Current Iteration');
-  this.inProgress = this.stages.findOrCreateByAttribute('name', 'In-Progress');
-  this.underReview = this.stages.findOrCreateByAttribute('name', 'Under Review');
+      backlogView : new StageView({
+        model : this.backlog,
+        collection : this.stories,
+        el : $('#backlog')
+      }),
 
-  this.views = {
-    backlogView : new StageView({
-      model : this.backlog,
-      collection : this.stories,
-      el : $('#backlog')
-    }),
+      currentIterationView : new StageView({
+        model : this.currentIteration,
+        collection : this.stories,
+        el : $('#current_iteration')
+      }),
 
-    currentIterationView : new StageView({
-      model : this.currentIteration,
-      collection : this.stories,
-      el : $('#current_iteration')
-    }),
+      inProgressView : new StageView({
+        model : this.inProgress,
+        collection : this.stories,
+        el : $('#in_progress')
+      }),
 
-    inProgressView : new StageView({
-      model : this.inProgress,
-      collection : this.stories,
-      el : $('#in_progress')
-    }),
+      underReviewView : new StageView({
+        model : this.underReview,
+        collection : this.stories,
+        el : $('#review')
+      }),
 
-    underReviewView : new StageView({
-      model : this.underReview,
-      collection : this.stories,
-      el : $('#review')
-    }),
+      storyCreatorView : new StoryCreatorView({
+        model : this.backlog,
+        collection : this.stories,
+        el : $('#story_adder')
+      })
+    };
 
-    storyCreatorView : new StoryCreatorView({
-      model : this.backlog,
-      collection : this.stories,
-      el : $('#story_adder')
-    })
-  };
-
-  _(this.views).each(function(view) { view.render() });
+    _(views).each(function(view) { view.render() });
+  }
 };
 
 $(function() {
-  window.river = new River();
+  River.initialize();
+  window.River = River;
 });
 
 })(this, this.document);
