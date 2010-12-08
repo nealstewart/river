@@ -38,7 +38,7 @@
   padding-top: 11px;
   font-size: 16px;
   line-height: 22px;
-  background: url('index-card.png');
+  background: url('images/index-card.png');
   color: #447;
   border-top: 1px solid #666;
 }
@@ -84,7 +84,7 @@ table {
   padding: 0;
   width: 226px;
   height: 257px;
-  background: url('trash.jpg');
+  background: url('images/trash.jpg');
   background-repeat: no-repeat;
   position: fixed;
   top: 64px;
