@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .stages th {
   border-bottom: 1px solid #999;
   font: 20px helvetica sans-serif;
@@ -8,6 +13,7 @@
   vertical-align: top;
   width: 23%;
   border: 1px dashed #999;
+  padding-top: 15px;
 }
 
 .stage header {
@@ -40,7 +46,6 @@
   line-height: 22px;
   background: url('images/index-card.png');
   color: #447;
-  border-top: 1px solid #666;
 }
 
 .stages form {
@@ -51,11 +56,12 @@
 }
 
 textarea.story {
-  width: 223px;
-  height: 125px;
+  width: 221px;
+  height: 122px;
   margin-top: 20px;
   margin-bottom: 0;
   resize: none;
+  border: none;
 }
 
 .story-placeholder {
@@ -71,22 +77,62 @@ textarea.story {
   background-color: #77777E;
 }
 
-table {
+.stages {
   width: 969px;
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
   overflow: auto;
   border: 1px solid black;
   background-color: #666;
 }
 
-#trash {
+.action_box {
+  position: fixed;
   margin: 0;
   padding: 0;
-  width: 226px;
-  height: 257px;
-  background: url('images/trash.jpg');
+  margin-top: -50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 7px;
+}
+
+#completer {
+  right: 9px;
+  background: url('images/checkbox.jpg');
+  top: 50%;
+  width: 126px;
+  height: 126px;
   background-repeat: no-repeat;
+}
+
+#trash {
+  left: 15px;
+  top: 80%;
+  height: 129px;
+  width: 119px;
+  background-color: #892015;
+  background: url('images/trash.gif');
+  background-repeat: no-repeat;
+  background-position: -7px 0px;
+}
+
+#icebox {
+  left: 19px;
+  top: 17%;
+  background: url('images/folder.jpg');
+  background: url('images/folder.jpg');
+  background-position: -32px -26px;
+  width: 126px;
+  height: 115px;
+}
+
+.stage_header {
   position: fixed;
-  top: 64px;
-  right: 21px;
+  top: 0;
+}
+
+.stage_header th {
+  background-color: #666;
+  width: 240px;
 }

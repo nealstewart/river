@@ -153,7 +153,6 @@ var StageView = Backbone.View.extend({
   recalculateSort : function() {
     var sortIterator = 0;
     this.$('li').each(function(index, element) {
-      window.elementtolookat = element;
       var model = $(element).data('river-model');
       model.set({sort_num : index});
       model.save();
@@ -216,6 +215,25 @@ var TrashView = Backbone.View.extend({
   }
 });
 
+var StageChanger = Backbone.View.extend({
+  initialize : function() {
+    this.storyDropped = _.bind(this.storyDropped, this);
+
+    $(this.el).droppable({
+      accept : '.story',
+      drop : this.storyDropped
+    });
+  },
+
+  storyDropped : function(event, ui) {
+    console.log(this);
+    var model = ui.draggable.data('river-model');
+    model.set({stage_id : this.model.id});
+    model.save();
+    ui.draggable.remove();
+  }
+});
+
 var StoryCreatorView = Backbone.View.extend({
   events : {
     "submit" : "create",
@@ -251,6 +269,7 @@ River = {
   initialize : function() {
     this.stories = new StoryList();
     this.stories.fetch();
+
     this.stages = new StageList();
     this.stages.fetch();
 
@@ -258,6 +277,9 @@ River = {
     this.currentIteration = this.stages.findOrCreateByAttribute('name', 'Current Iteration');
     this.inProgress = this.stages.findOrCreateByAttribute('name', 'In-Progress');
     this.underReview = this.stages.findOrCreateByAttribute('name', 'Under Review');
+
+    this.completed = this.stages.findOrCreateByAttribute('name', 'Completed');
+    this.archived = this.stages.findOrCreateByAttribute('name', 'Completed');
 
     var views = {
       trashView : new TrashView({
@@ -293,6 +315,16 @@ River = {
         model : this.backlog,
         collection : this.stories,
         el : $('#story_adder')
+      }),
+
+      storyCompleterView : new StageChanger({
+        model : this.completed,
+        el : $('#completer')
+      }),
+
+      archiverView : new StageChanger({
+        model : this.archived,
+        el : $('#icebox')
       })
     };
 
@@ -304,6 +336,7 @@ $(function() {
   River.initialize();
   window.River = River;
 });
+
 });
 
 })(this, this.document);
