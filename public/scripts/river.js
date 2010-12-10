@@ -1,4 +1,16 @@
 (function(window, document, undefined) {
+require(
+  {
+    baseUrl : "/scripts/"
+  },
+
+  [
+    'order!/scripts/vendor/underscore.js', 
+    'order!/scripts/vendor/backbone.js',
+    'order!/scripts/vendor/backbone-localstorage.js'
+  ], 
+   
+function() {
 "use strict";
 
 var River,
@@ -286,6 +298,7 @@ River = {
 $(function() {
   River.initialize();
   window.River = River;
+});
 });
 
 })(this, this.document);
