@@ -61,31 +61,38 @@ var StoryView = Backbone.View.extend({
   className : 'story',
   tagName : 'li',
 
+  events : {
+    "dblclick" : "onDblclick",
+    "blur" : "blur",
+    "keypress" : "keypress",
+  },
+
+  keypress : function(event) {
+    if (event.keyCode == 13) {
+      $(this.el).blur();
+
+      event.preventDefault();
+    }
+  },
+
+  blur : function(event) {
+    var self = $(this.el);
+    self.removeAttr('contenteditable');
+    self.parent().sortable('enable');
+
+    var model = self.data('river-model');
+    model.set({description : self.text()});
+    model.save();
+  },
+
   onDblclick : function(evt) {
-    var that = this,
-        self = $(this);
+    var that = this.el,
+        self = $(this.el);
 
     self.attr('contenteditable', true);
     self.parent().sortable('disable');
-
+    
     self.focus();
-
-    self.blur(function(evt) {
-      $(this).removeAttr('contenteditable');
-      $(this).parent().sortable('enable');
-
-      var model = $(this).data('river-model');
-      model.set({description : $(this).text()});
-      model.save();
-    });
-
-    self.keypress(function(evt) {
-      if (evt.keyCode == 13) {
-        $(this).blur();
-
-        evt.preventDefault();
-      }
-    });
   },
 
   render : function() {
@@ -94,8 +101,6 @@ var StoryView = Backbone.View.extend({
     $(this.el).text(this.model.get('description'));
     $(this.el).data('river-model', this.model);
     $(this.el).attr('id', "story-" + this.model.cid);
-
-    $(this.el).dblclick(this.onDblclick);
 
     return this;
   }
