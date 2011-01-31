@@ -1,54 +1,84 @@
+<!DOCTYPE HTML>
 <html>
-
 <head>
-  <title>Test River</title>
-  <link rel="stylesheet" href="stylesheets/style.css" />
-  <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js></script>
-  <script src=https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js></script>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
-
 <body>
-  <div id="trash" class="action_box">
-  </div>
-
-  <div id="completer" class="action_box">
-  </div>
-
-  <div id="icebox" class="action_box">
-  </div>
-
-  <table class=stages>
-    <tr class="stage_header">
-      <th>Backlog</th>
-      <th>Current Iteration</th>
-      <th>In-Progress</th>
-      <th>To Review</th>
+  <header>
+      flowriver
+  </header>
+  <table id=main_table>
+    <tr id=headers>
+      <th>
+        backlog
+      </th>
+      <th>
+        current
+      </th>
+      <th>
+        in progress 
+      </th>
+      <th>
+        review
+      </th>
     </tr>
-    <tr>
-      <td>
-        <form id="story_adder">
-          <textarea class="story" placeholder="Add a story" name="story[description]"></textarea>
-        </form>
-        <ul id=backlog>
-        </ul>
-      </td>
-      <td>
-        <ul id=current_iteration>
-        </ul>
-      </td>    
 
-      <td>
-        <ul id=in_progress>
-        </ul>
+    <tr class=stages>
+      <td id=backlog>
       </td>
 
-      <td>
-        <ul id=review>
-        </ul>
+      <td id=current>
+      </td>
+
+      <td id=in_progress>
+      </td>
+
+      <td id=review>
       </td>
     </tr>
   </table>
 
-  <script data-main="river" src=scripts/require.js></script>
+  <footer id=control_panel>
+    <nav>
+      <a id=story_creator href="#">Create Story
+        <form id="story_creator_form" class="hidden">
+          <textarea class=story placeholder="Add a story" name="story[description]"></textarea>
+        </form>
+      </a>
+      <a href="#">Archive</a>
+      <a href="#">Trash</a>
+    </nav>
+  </footer>
+
+  <script id="tmpl-story" type="jquery/template">
+    <div class=description>
+      ${description}
+    </div>
+    <div class=controls>
+      <div class="right_controls">
+        <a href="#" class=delete >x</a>
+        <a href="#" class=move >></a>
+      </div>
+
+      <div class="left_controls">
+        <a href="#" class=archive >Archive</a>
+      </div>
+    </div>
+  </script>
+
+  <script src=scripts/vendor/lab.src.js></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
+  <script src="scripts/vendor/jquery.tmpl.js"></script>
+  <script src="scripts/vendor/underscore.js"></script>
+  <script src="scripts/vendor/backbone.js"></script>
+  <script src="scripts/vendor/backbone-localstorage.js"></script>
+  <script src="scripts/lib/application.js"></script>
+  <script src="scripts/lib/models/stage.js"></script>
+  <script src="scripts/lib/models/story.js"></script>
+  <script src="scripts/lib/views/stages/stage.js"></script>
+  <script src="scripts/lib/views/stories/story.js"></script>
+  <script src="scripts/lib/views/stories/creator.js"></script>
+  <script src="scripts/river.js"></script>
 </body>
 </html>

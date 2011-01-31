@@ -1,138 +1,186 @@
-body {
-  margin: 0;
-  padding: 0;
-}
-
-.stages th {
-  border-bottom: 1px solid #999;
-  font: 20px helvetica sans-serif;
-  color: #EEE;
-}
-
-.stages td {
-  vertical-align: top;
-  width: 23%;
-  border: 1px dashed #999;
-  padding-top: 15px;
-}
-
-.stage header {
-  text-align: center;
-}
-
-.stages ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  min-height: 500px;
+html, body {
   height: 100%;
 }
 
+body {
+  font-family: Courier New;
+  margin: 0;
+  padding: 0;
+  min-width: 920px;
+}
 
-.story {
-  min-height: 100px;
-  width: 200px;
-  margin-left: auto;
+header {
+  background-color: #333;  
+  color: #EEE;
+  padding: 10px;
+  font-size: 20px;
+}
+
+
+#headers th {
+  background-color: #666;
+  border: 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: normal;
+  padding: 10px;
+  border: 1px solid black;
+  width: 25%;
+}
+
+#main_table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 93%;
+}
+
+tr.stages td {
+  height: 100%;
+  border-right: 1px solid black;
+  background-color: #ddd;
+  vertical-align: top;
+}
+
+tr.states td:first-child {
+  border: 0;
+}
+
+tr.states td:last-child {
+  border: 0;
+}
+
+#control_panel {
+  width: 900px;
+  margin-left: -450px;
   margin-right: auto;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  left: 50%;
+  bottom: 0;
+  position: fixed;
+  background-color: #000;
+  border: 3px solid #999;
+  border-bottom: 0;
+}
+
+#control_panel nav a {
+  height: 60px;
+  display: block;
+  float: left;
+  background-color: #000;
+  color: #FFF;
+  width: 33.33%;
+  text-align: center;
+  line-height: 60px;
+}
+
+#control_panel nav a:hover {
+  background-color: #333;
+}
+
+#control_panel nav a:first-child {
+  border-right: 1px solid #999;
+}
+
+#control_panel nav a:last-child {
+  border-left: 1px solid #999;
+}
+
+.hidden {
+  display: none !important;
 }
 
 .story {
+  position: relative;
   font: 20px helvetica sans-serif;
   padding: 10px;
   padding-top: 11px;
   font-size: 16px;
   line-height: 22px;
-  background: url('images/index-card.png');
   color: #447;
-}
-
-.stages form {
-  width: 223px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 0;
-}
-
-textarea.story {
-  width: 221px;
-  height: 122px;
-  margin-top: 20px;
-  margin-bottom: 0;
+  background-color: #EEE;
+  border: 1px solid #CCC;
   resize: none;
-  border: none;
 }
 
-.story-placeholder {
-  min-height: 100px;
+.story {
+  position: relative;
+  min-height: 30px;
   width: 200px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
-  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.story-placeholder {
+  height: 30px;
   padding: 10px;
-  padding-top: 11px;
-  background: none;
-  background-color: #77777E;
+  margin-bottom: 10px;
+  background-color: #CCC;
 }
 
-.stages {
-  width: 969px;
-  margin-left: auto;
-  margin-right: auto;
-  border-collapse: collapse;
-  overflow: auto;
-  border: 1px solid black;
-  background-color: #666;
+#story_creator form {
+  vertical-align: middle;
 }
 
-.action_box {
-  position: fixed;
-  margin: 0;
-  padding: 0;
-  margin-top: -50px;
-  width: 100px;
-  height: 100px;
-  border-radius: 7px;
+#story_creator textarea {
+  width: 91%;
+  height: 100%;
+  margin-bottom: 0;
 }
 
-#completer {
-  right: 9px;
-  background: url('images/checkbox.jpg');
-  top: 50%;
-  width: 126px;
-  height: 126px;
-  background-repeat: no-repeat;
-}
-
-#trash {
-  left: 15px;
-  top: 80%;
-  height: 129px;
-  width: 119px;
-  background-color: #892015;
-  background: url('images/trash.gif');
-  background-repeat: no-repeat;
-  background-position: -7px 0px;
-}
-
-#icebox {
-  left: 19px;
-  top: 17%;
-  background: url('images/folder.jpg');
-  background: url('images/folder.jpg');
-  background-position: -32px -26px;
-  width: 126px;
-  height: 115px;
-}
-
-.stage_header {
-  position: fixed;
+.story .controls {
+  position: absolute;
+  display: none;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  left: 0;
   top: 0;
 }
 
-.stage_header th {
-  background-color: #666;
-  width: 240px;
+.story:hover .controls {
+  display: block;
 }
+
+.story .controls a {
+  text-decoration: none; 
+  font-weight: bold;
+}
+
+.story .left_controls {
+  position: absolute;
+  height: 100%;
+  left: -34px;
+  width: 32px;
+  padding-right: 10px;
+}
+
+.story .right_controls {
+  position: absolute;
+  height: 100%;
+  right: -42px;
+  width: 32px;
+  padding-left: 10px;
+}
+
+.story .delete {
+  position: absolute;
+  top: 0;
+  color: red;
+}
+
+.story .move {
+  position: absolute;
+  bottom: 0;
+  color: green;
+}
+
+.story .archive {
+  background: url('/stylesheets/images/filing_cabinet.png');
+  text-indent: -99999px;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  background-position: 0 3px;
+}
+

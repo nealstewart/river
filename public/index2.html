@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <title>Test River</title>
+  <link rel="stylesheet" href="stylesheets/style.css" />
+</head>
+
+<body>
+  <ul id="archived">
+  </ul>
+
+  <div id="main_container">
+    <div id="trash" class="action_box">
+      <div class="highlight">
+      </div>
+    </div>
+
+    <div id="completer" class="action_box">
+      <div class="highlight">
+      </div>
+    </div>
+
+
+    <div id="icebox" class="action_box">
+      <a href="#archived" class="highlight">
+      </a>
+    </div>
+
+    <table class=stages>
+      <tr class="main_header">
+        <h1>flowriver</h1>
+      </tr>
+      <tr class="stage_header">
+        <th>Backlog</th>
+        <th>Current Iteration</th>
+        <th>In-Progress</th>
+        <th>To Review</th>
+      </tr>
+      <tr>
+        <td>
+          <form id="story_adder">
+            <textarea class="story" placeholder="Add a story" name="story[description]"></textarea>
+          </form>
+          <ul id=backlog>
+          </ul>
+        </td>
+        <td>
+          <ul id=current_iteration>
+          </ul>
+        </td>    
+
+        <td>
+          <ul id=in_progress>
+          </ul>
+        </td>
+
+        <td>
+          <ul id=review>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  ></script>
+  <script data-main="river" src=scripts/require.js></script>
+</body>
+</html>

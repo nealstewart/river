@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <style>
+      .story .controls {
+        position: absolute;
+        display: none;
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+      }
+
+      .story:hover .controls {
+        display: block;
+      }
+
+      .story .controls a {
+        text-decoration: none; 
+        font-weight: bold;
+      }
+
+      .story .left_controls {
+        position: absolute;
+        height: 100%;
+        left: -34px;
+        width: 32px;
+        padding-right: 10px;
+      }
+
+      .story .right_controls {
+        position: absolute;
+        height: 100%;
+        right: -42px;
+        width: 32px;
+        padding-left: 10px;
+      }
+
+      .story .delete {
+        position: absolute;
+        top: 0;
+        color: red;
+      }
+
+      .story .move {
+        position: absolute;
+        bottom: 0;
+        color: green;
+      }
+
+      .story .archive {
+        background: url('/stylesheets/images/filing_cabinet.png');
+        text-indent: -99999px;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: 0;
+        background-position: 0 3px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <br />
+    <br />
+    <div class=story>
+      <div class=controls>
+        <div class="right_controls">
+          <a href="#" class=delete >x</a>
+          <a href="#" class=move >></a>
+        </div>
+
+        <div class="left_controls">
+          <a href="#" class=archive >Archive</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
