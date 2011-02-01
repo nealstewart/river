@@ -90,6 +90,12 @@ tr.states td:last-child {
 
 .story {
   position: relative;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.story .description {
+  position: relative;
   font: 20px helvetica sans-serif;
   padding: 10px;
   padding-top: 11px;
@@ -101,13 +107,12 @@ tr.states td:last-child {
   resize: none;
 }
 
-.story {
+.story .description {
   position: relative;
   min-height: 30px;
   width: 200px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 10px;
 }
 
 .story-placeholder {
@@ -149,7 +154,7 @@ tr.states td:last-child {
 .story .left_controls {
   position: absolute;
   height: 100%;
-  left: -34px;
+  left: 10px;
   width: 32px;
   padding-right: 10px;
 }
@@ -157,7 +162,7 @@ tr.states td:last-child {
 .story .right_controls {
   position: absolute;
   height: 100%;
-  right: -42px;
+  right: 10px;
   width: 32px;
   padding-left: 10px;
 }
@@ -184,3 +189,12 @@ tr.states td:last-child {
   background-position: 0 3px;
 }
 
+
+.story .edit {
+  position: absolute;
+  right: 55px;
+  top: 0;
+  color: black;
+  font-size: 11px;
+  z-index: 3;
+}

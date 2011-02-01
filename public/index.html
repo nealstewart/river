@@ -51,10 +51,8 @@
   </footer>
 
   <script id="tmpl-story" type="jquery/template">
-    <div class=description>
-      ${description}
-    </div>
     <div class=controls>
+      <a href="#" class=edit>Edit</a>
       <div class="right_controls">
         <a href="#" class=delete >x</a>
         <a href="#" class=move >></a>
@@ -63,6 +61,10 @@
       <div class="left_controls">
         <a href="#" class=archive >Archive</a>
       </div>
+    </div>
+
+    <div class=description>
+      ${description}
     </div>
   </script>
 

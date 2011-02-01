@@ -78,6 +78,8 @@ var StoryCreator = Backbone.View.extend({
         at: "center top"
       });
 
+      form.find('textarea').focus();
+
     } else {
       form.addClass('hidden');
       form.find('textarea').val('').blur();

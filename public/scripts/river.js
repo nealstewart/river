@@ -3,6 +3,7 @@ var currentIteration;
 var inProgress;
 var underReview;
 var archive;
+var complete;
 
 (function() {
 var stories = new StoryList;
@@ -16,6 +17,7 @@ currentIteration = stageList.findOrCreateByAttribute('name', 'current');
 inProgress = stageList.findOrCreateByAttribute('name', 'in progress');
 underReview = stageList.findOrCreateByAttribute('name', 'review');
 archive = stageList.findOrCreateByAttribute("name", "archive");
+complete = stageList.findOrCreateByAttribute("name", "complete");
 
 var tc = new StoryCreator({ 
   model: backlog,
@@ -31,7 +33,7 @@ var backlogView = new StageView({
 backlogView.render();
 
 var currentView = new StageView({
-  model: current,
+  model: currentIteration,
   collection: stories,
   el: $('#current')
 });

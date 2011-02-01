@@ -5,40 +5,80 @@ var StoryView = Backbone.View.extend({
   template : $('#tmpl-story').template('story'),
 
   events : {
-    "dblclick" : "onDblclick",
-    "blur" : "blur",
-    "keypress" : "keypress",
+    "blur .description" : "blur",
+    "keypress .description" : "keypress",
+    "click .edit" : "onDblclick",
     "click .archive" : "archive",
     "click .delete" : "delete",
-    "click .move" : "move"
+    "click .move" : "move",
+    "mousedown *" : "mousedown",
+    "dblclick .description" : "onDblclick"
+  },
+
+  mousedown : function(evt) {
+    var currentActiveElement,
+        elementBeingClicked,
+        elementsBelongToSameStory;
+
+    currentActiveElement = $(document.activeElement);
+
+    if (currentActiveElement.hasClass('description')) {
+      elementBeingClicked = $(evt.srcElement);
+
+      elementsBelongToSameStory = elementBeingClicked.closest('.story')[0] === currentActiveElement.closest('.story')[0];
+
+      if (!elementsBelongToSameStory) {
+        currentActiveElement.blur();
+      }
+    }
   },
 
   keypress : function(event) {
-    if (event.keyCode == 13) {
-      $(this.el).blur();
+    if (!event.shiftKey && event.keyCode == 13) {
+      this.$('.description').blur();
 
       event.preventDefault();
     }
   },
 
   blur : function(event) {
-    var self = $(this.el);
-    self.removeAttr('contenteditable');
-    self.parent().sortable('enable');
+    var description = this.$('.description');
+    description.removeAttr('contenteditable');
 
-    var model = self.data('river-model');
-    model.set({description : self.text()});
-    model.save();
+    $(this.el).parent().sortable('enable');
+
+    this.model.set({"description" : description.text()});
+    this.model.save();
   },
 
   onDblclick : function(evt) {
-    var that = this.el,
-        self = $(this.el);
+    var self = $(this.el);
+    var description = this.$('.description');
 
-    self.attr('contenteditable', true);
+    description.attr('contenteditable', true);
     self.parent().sortable('disable');
-    
-    self.focus();
+    description.focus();
+
+    var length = description.text().length;
+    var descriptionDomEl = description[0];
+
+    var range, selection;
+    if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+    {
+        range = document.createRange();//Create a range (a range is a like the selection but invisible)
+        range.selectNodeContents(descriptionDomEl);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        selection = window.getSelection();//get the selection object (allows you to change selection)
+        selection.removeAllRanges();//remove any selections already made
+        selection.addRange(range);//make the range you have just created the visible selection
+    }
+    else if(document.selection)//IE 8 and lower
+    { 
+        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        range.select();//Select the range (make it the visible selection
+    }
   },
 
   render : function() {
@@ -52,14 +92,38 @@ var StoryView = Backbone.View.extend({
     return this;
   },
 
-  delete : function(evt) {
+  "delete" : function(evt) {
     this.model.destroy(); 
   },
 
   archive : function(evt) {
-    console.log(this.model.collection)
-    this.model.set({"stage_id" : archive.id});
+    this.model.set({ "stage_id" : archive.id });
     this.model.save();
+    evt.preventDefault();
+  },
+
+  move : function(evt) {
+    var nextStageId;
+
+    switch(this.model.get("stage_id")) {
+      case backlog.id:
+        nextStageId = currentIteration.id;
+        break;
+      case currentIteration.id :
+        nextStageId = inProgress.id;
+        break;
+      case inProgress.id :
+        nextStageId = underReview.id;
+        break;
+      case underReview.id :
+        nextStageId = complete.id;
+        break;
+    }
+    console.log(nextStageId)
+
+    this.model.set({ "stage_id" : nextStageId });
+    this.model.save();
+    console.log(this.model);
     evt.preventDefault();
   }
 });
