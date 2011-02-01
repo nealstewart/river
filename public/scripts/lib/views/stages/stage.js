@@ -57,7 +57,7 @@ var StageView = Backbone.View.extend({
     if (shouldRender) {
       if (this.$('#story-' + story.cid).size() == 0) {
          $(view.render().el).hide();
-         $(this.el).prepend(view.render().el);
+         $(this.el).append(view.render().el);
          $(view.el).slideDown()
          this.recalculateSort();
       }
