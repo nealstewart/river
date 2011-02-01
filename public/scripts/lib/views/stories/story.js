@@ -106,17 +106,17 @@ var StoryView = Backbone.View.extend({
     var nextStageId;
 
     switch(this.model.get("stage_id")) {
-      case backlog.id:
-        nextStageId = currentIteration.id;
+      case Application.Backlog.id:
+        nextStageId = Application.CurrentIteration.id;
         break;
-      case currentIteration.id :
-        nextStageId = inProgress.id;
+      case Application.CurrentIteration.id :
+        nextStageId = Application.InProgress.id;
         break;
-      case inProgress.id :
-        nextStageId = underReview.id;
+      case Application.InProgress.id :
+        nextStageId = Application.UnderReview.id;
         break;
-      case underReview.id :
-        nextStageId = complete.id;
+      case Application.UnderReview.id :
+        nextStageId = Application.Complete.id;
         break;
     }
     console.log(nextStageId)

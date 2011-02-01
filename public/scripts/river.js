@@ -1,56 +1,39 @@
-var backlog;
-var currentIteration;
-var inProgress;
-var underReview;
-var archive;
-var complete;
-
 (function() {
-var stories = new StoryList;
-stories.fetch();
 
-var stageList = new StageList;
-stageList.fetch();
+  Application.initialize();
 
-backlog = stageList.findOrCreateByAttribute('name', 'backlog');
-currentIteration = stageList.findOrCreateByAttribute('name', 'current');
-inProgress = stageList.findOrCreateByAttribute('name', 'in progress');
-underReview = stageList.findOrCreateByAttribute('name', 'review');
-archive = stageList.findOrCreateByAttribute("name", "archive");
-complete = stageList.findOrCreateByAttribute("name", "complete");
+  var tc = new StoryCreator({ 
+    model: Application.Backlog,
+    collection: Application.Stories,
+    el : $('#story_creator') 
+  });
 
-var tc = new StoryCreator({ 
-  model: backlog,
-  collection: stories,
-  el : $('#story_creator') 
-});
+  var backlogView = new StageView({
+    model: Application.Backlog,
+    collection: Application.Stories,
+    el: $('#backlog')
+  });
+  backlogView.render();
 
-var backlogView = new StageView({
-  model: backlog,
-  collection: stories,
-  el: $('#backlog')
-});
-backlogView.render();
+  var currentView = new StageView({
+    model: Application.CurrentIteration,
+    collection: Application.Stories,
+    el: $('#current')
+  });
+  currentView.render();
 
-var currentView = new StageView({
-  model: currentIteration,
-  collection: stories,
-  el: $('#current')
-});
-currentView.render();
+  var inProgressView = new StageView({
+    model: Application.InProgress,
+    collection: Application.Stories,
+    el: $('#in_progress')
+  });
+  inProgressView.render();
 
-var inProgressView = new StageView({
-  model: inProgress,
-  collection: stories,
-  el: $('#in_progress')
-});
-inProgressView.render();
-
-var reviewView = new StageView({
-  model: underReview,
-  collection: stories,
-  el: $('#review')
-});
-reviewView.render();
+  var reviewView = new StageView({
+    model: Application.UnderReview,
+    collection: Application.Stories,
+    el: $('#review')
+  });
+  reviewView.render();
 
 })();
