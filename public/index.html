@@ -5,8 +5,11 @@
 </head>
 <body>
   <header>
-      flowriver
-  </header>
+    river
+    <nav>
+      <a class=button href="#" id="iteration_completer">Finish Iteration</a>
+    </nav>
+    </header>
   <table id=main_table>
     <tr id=headers>
       <th>
@@ -45,10 +48,30 @@
           <textarea class=story placeholder="Add a story" name="story[description]"></textarea>
         </form>
       </a>
-      <a href="#">Archive</a>
-      <a href="#">Trash</a>
+      <a href="#archive">Archive</a>
+      <a href="#completed">View Completed Stories</a>
     </nav>
   </footer>
+  
+  <div class="overlaying_page hidden" id=archive>
+    <header>
+    <h1>Archive (<a href="#">Return to Project</a>)</h1>
+      <nav><label>Search</label>
+        <input type=search></input>
+      </nav>
+    </header>
+    <ul class="stories">
+    </ul>
+  </div>
+
+  <div class="overlaying_page hidden" id=completed>
+    <header>
+    <h1>Completed (<a href="#">Return to Project</a>)</h1>
+    </header>
+    <h2>Completed Tasks for Current Iteration</h2>
+    <ul class="stories">
+    </ul>
+  </div>
 
   <script id="tmpl-story" type="jquery/template">
     <div class=controls>
@@ -68,6 +91,22 @@
     </div>
   </script>
 
+  <script id="tmpl-archive_story" type="jquery/template">
+    <div class=controls>
+      <a href="#" class=edit>Edit</a>
+      <a href="#" class=delete>x</a>
+      <a href="#" class=move>Move to Backlog</a>
+    </div>
+
+    <div spellcheck=false class=description>
+      ${description}
+    </div>
+  </script>
+
+  <script id="tmpl-completed_story" type="jquery/template">
+    ${description}
+  </script>
+
   <script src=scripts/vendor/lab.src.js></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
@@ -75,12 +114,18 @@
   <script src="scripts/vendor/underscore.js"></script>
   <script src="scripts/vendor/backbone.js"></script>
   <script src="scripts/vendor/backbone-localstorage.js"></script>
-  <script src="scripts/lib/application.js"></script>
   <script src="scripts/lib/models/stage.js"></script>
   <script src="scripts/lib/models/story.js"></script>
+  <script src="scripts/lib/models/iteration.js"></script>
   <script src="scripts/lib/views/stages/stage.js"></script>
+  <script src="scripts/lib/views/stages/archive.js"></script>
+  <script src="scripts/lib/views/stages/completed.js"></script>
+  <script src="scripts/lib/views/iterations/completer.js"></script>
   <script src="scripts/lib/views/stories/story.js"></script>
+  <script src="scripts/lib/views/stories/archive_story.js"></script>
+  <script src="scripts/lib/views/stories/completed_story.js"></script>
   <script src="scripts/lib/views/stories/creator.js"></script>
+  <script src="scripts/lib/application.js"></script>
   <script src="scripts/river.js"></script>
 </body>
 </html>
