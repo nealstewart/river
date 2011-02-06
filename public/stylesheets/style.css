@@ -91,87 +91,69 @@ tr.states td:last-child {
 .story {
   position: relative;
   width: 100%;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
 .story .description {
-  position: relative;
   font: 20px helvetica sans-serif;
-  padding: 10px;
-  padding-top: 11px;
   font-size: 16px;
   line-height: 22px;
   color: #447;
   background-color: #EEE;
-  border: 1px solid #CCC;
-  resize: none;
-}
+  border: 1px solid #CCC; }
 
 .story .description {
   position: relative;
+  resize: none;
+  padding: 10px;
+  padding-top: 11px;
   min-height: 30px;
   width: 200px;
   margin-left: auto;
+  margin-right: auto; }
+
+.story .content {
+  position: relative;
+  margin-left: auto;
   margin-right: auto;
-}
-
-.story-placeholder {
-  height: 30px;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #CCC;
-}
-
-#story_creator form {
-  vertical-align: middle;
-}
-
-#story_creator textarea {
-  width: 91%;
-  height: 100%;
-  margin-bottom: 0;
+  width: 220px;
+  border 1px solid transparent;
 }
 
 .story .controls {
+  display: block;
   position: absolute;
-  display: none;
   text-align: center;
+  display: none;
   height: 100%;
   width: 100%;
   left: 0;
-  top: 0;
-}
+  top: 0; }
 
 .story:hover .controls {
-  display: block;
-}
+  display: block; }
 
 .story .controls a {
+  display: block;
+  width: 32px;
   text-decoration: none; 
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 .story .left_controls {
   position: absolute;
   height: 100%;
-  left: 10px;
-  width: 32px;
-  padding-right: 10px;
-}
+  left: -32px;
+  padding-right: 10px; }
 
 .story .right_controls {
   position: absolute;
   height: 100%;
-  right: 10px;
-  width: 32px;
-  padding-left: 10px;
-}
+  right: 0px; }
+
 
 .story .delete {
   position: absolute;
   top: 0;
-  color: red;
-}
+  color: red; }
 
 .story .move {
   position: absolute;
@@ -198,3 +180,21 @@ tr.states td:last-child {
   font-size: 11px;
   z-index: 3;
 }
+
+.story-placeholder {
+  height: 30px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #CCC;
+}
+
+#story_creator form {
+  vertical-align: middle;
+}
+
+#story_creator textarea {
+  width: 91%;
+  height: 100%;
+  margin-bottom: 0;
+}
+

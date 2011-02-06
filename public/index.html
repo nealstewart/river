@@ -9,36 +9,40 @@
     <nav>
       <a class=button href="#" id="iteration_completer">Finish Iteration</a>
     </nav>
-    </header>
+  </header>
+
   <table id=main_table>
-    <tr id=headers>
-      <th>
-        backlog
-      </th>
-      <th>
-        current
-      </th>
-      <th>
-        in progress 
-      </th>
-      <th>
-        review
-      </th>
-    </tr>
+    <thead>
+      <tr id=headers>
+        <th>
+          backlog
+        </th>
+        <th>
+          current
+        </th>
+        <th>
+          in progress 
+        </th>
+        <th>
+          review
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class=stages>
+        <td id=backlog>
+        </td>
 
-    <tr class=stages>
-      <td id=backlog>
-      </td>
+        <td id=current>
+        </td>
 
-      <td id=current>
-      </td>
+        <td id=in_progress>
+        </td>
 
-      <td id=in_progress>
-      </td>
-
-      <td id=review>
-      </td>
-    </tr>
+        <td id=review>
+        </td>
+      </tr>
+    </tbody>
   </table>
 
   <footer id=control_panel>
@@ -74,20 +78,22 @@
   </div>
 
   <script id="tmpl-story" type="jquery/template">
-    <div class=controls>
-      <a href="#" class=edit>Edit</a>
-      <div class="right_controls">
-        <a href="#" class=delete >x</a>
-        <a href="#" class=move >></a>
+    <div class=content>
+      <div class=controls>
+        <a href="#" class=edit>Edit</a>
+        <div class="right_controls">
+          <a href="#" class=delete >x</a>
+          <a href="#" class=move >></a>
+        </div>
+
+        <div class="left_controls">
+          <a href="#" class=archive >Archive</a>
+        </div>
       </div>
 
-      <div class="left_controls">
-        <a href="#" class=archive >Archive</a>
+      <div spellcheck=false class=description>
+        ${description}
       </div>
-    </div>
-
-    <div spellcheck=false class=description>
-      ${description}
     </div>
   </script>
 
