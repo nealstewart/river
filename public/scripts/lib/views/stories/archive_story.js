@@ -1,36 +1,16 @@
-var StoryView = Backbone.View.extend({
-  className : 'story',
+var ArchiveStoryView = Backbone.View.extend({
+  className : 'archive-story',
   tagName : 'div',
 
-  template : $('#tmpl-story').template('story'),
+  template : $('#tmpl-archive_story').template('archive_story'),
 
   events : {
     "blur .description" : "blur",
     "keypress .description" : "keypress",
     "click .edit" : "onDblclick",
-    "click .archive" : "archive",
     "click .delete" : "delete",
     "click .move" : "move",
-    "mousedown *" : "mousedown",
     "dblclick .description" : "onDblclick"
-  },
-
-  mousedown : function(evt) {
-    var currentActiveElement,
-        elementBeingClicked,
-        elementsBelongToSameStory;
-
-    currentActiveElement = $(document.activeElement);
-
-    if (currentActiveElement.hasClass('description')) {
-      elementBeingClicked = $(evt.srcElement);
-
-      elementsBelongToSameStory = elementBeingClicked.closest('.story')[0] === currentActiveElement.closest('.story')[0];
-
-      if (!elementsBelongToSameStory) {
-        currentActiveElement.blur();
-      }
-    }
   },
 
   keypress : function(event) {
@@ -45,7 +25,6 @@ var StoryView = Backbone.View.extend({
     var description = this.$('.description');
     description.removeAttr('contenteditable');
 
-    $(this.el).parent().sortable('enable');
 
     this.model.set({"description" : description.text()});
     this.model.save();
@@ -56,7 +35,6 @@ var StoryView = Backbone.View.extend({
     var description = this.$('.description');
 
     description.attr('contenteditable', true);
-    self.parent().sortable('disable');
     description.focus();
 
     var length = description.text().length;
@@ -79,6 +57,8 @@ var StoryView = Backbone.View.extend({
         range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
         range.select();//Select the range (make it the visible selection
     }
+
+    evt.preventDefault();
   },
 
   render : function() {
@@ -95,15 +75,6 @@ var StoryView = Backbone.View.extend({
   "delete" : function(evt) {
     if (confirm("Are you sure you want to delete this story?")) {
       this.model.destroy(); 
-    }
-
-    evt.preventDefault();
-  },
-
-  archive : function(evt) {
-    if (confirm("Are you sure you want to archive this story?")) {
-      this.model.set({ "stage_id" : Application.Archive.id });
-      this.model.save();
     }
 
     evt.preventDefault();

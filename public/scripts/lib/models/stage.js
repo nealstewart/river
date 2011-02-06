@@ -1,5 +1,11 @@
 var Stage = Backbone.Model.extend({
   getStories : function() {
+    var stageId = this.id;
+    var storyArray = Application.Stories.select(function(story){
+      return story.get("stage_id") === stageId;
+    });
+
+    return new StoryList(storyArray);
   }
 });
 
