@@ -22,7 +22,7 @@ Application.Controller = Backbone.Controller.extend({
 
   main : function() {
     if (this._archiveView || this._completedView) {
-      $('.overlaying_page').addClass("hidden");
+      $('.overlaying_page').hide();
     }
 
     if (!this._loadedMainPage) {
@@ -32,7 +32,7 @@ Application.Controller = Backbone.Controller.extend({
         el : $('#story_creator') 
       });
 
-      var backlogView = new StageView({
+      var backlogView = new BacklogView({
         model: Application.Backlog,
         collection: Application.Stories,
         el: $('#backlog')

@@ -68,8 +68,9 @@ var StageView = Backbone.View.extend({
 
   recalculateSort : function() {
     var sortIterator = 0;
+    var that = this;
     this.$('.story').each(function(index, element) {
-      var model = $(element).data('river-model');
+      var model = that.model;
       model.set({sort_num : index});
       model.save();
     });
@@ -93,7 +94,8 @@ var StageView = Backbone.View.extend({
       },
 
       stop : function(event, ui) {
-        ui.item.find('.controls').removeClass('hidden');
+        ui.item.find('.controls').attr('style', '');
+        ui.item.find('.controls').addClass('hidden');
       },
 
       receive : function(event, ui) {
@@ -106,7 +108,7 @@ var StageView = Backbone.View.extend({
       },
 
       start : function(event, ui) {
-        ui.item.find('.controls').addClass('hidden');
+        ui.item.find('.controls').hide();
       }
     });
 
