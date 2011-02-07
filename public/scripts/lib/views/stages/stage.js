@@ -106,7 +106,6 @@ var StageView = Backbone.View.extend({
       },
 
       start : function(event, ui) {
-        $(document.activeElement).blur();
         ui.item.find('.controls').addClass('hidden');
       }
     });
