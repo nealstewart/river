@@ -4,59 +4,65 @@
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 <body>
-  <header>
-    river
-    <nav>
-      <a class=button href="#" id="iteration_completer">Finish Iteration</a>
+  <header id=main>
+    
+    <h1 class="project_name">River</h1>
+    <div class="iteration_info">
+      <span class=hint>iteration</span>
+      <span class=number>1</span> - <span class=name>Modest Beginnings</span>
+    </div>
+    <div id=logo>river</div>
+    <nav style="display:none">
     </nav>
-  </header>
+    </header>
 
-  <table id=main_table>
-    <thead>
-      <tr id=headers>
-        <th>
-          backlog
-        </th>
-        <th>
-          current
-        </th>
-        <th>
-          in progress 
-        </th>
-        <th>
-          review
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class=stages>
-        <td id=backlog>
-        </td>
+    <div id=headers>
+      <div class=wrapper>
+        <h1>backlog</h1>
+        <div class="nav_button top_tool down" id=story_creator>
+          <span>Add a Story</span>
+          <form id="story_creator_form" class="hidden">
+            <textarea class=story placeholder="Add a story" name="story[description]"></textarea>
+          </form>
+        </div>
+      </div>
+      <div class=wrapper>
+        <h1>current</h1>
+      </div>
+      <div class=wrapper>
+        <h1>in progress</h1>
+      </div>
+      <div class=wrapper>
+        <h1>review</h1>
+        <div class=top_tool>
+          <a class=button href="#" id="iteration_completer">Finish Iteration</a>
+        </div>
+      </div>
+    </div>
 
-        <td id=current>
-        </td>
-
-        <td id=in_progress>
-        </td>
-
-        <td id=review>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <footer id=control_panel>
-    <nav>
-      <a id=story_creator href="#">Create Story
-        <form id="story_creator_form" class="hidden">
-          <textarea class=story placeholder="Add a story" name="story[description]"></textarea>
-        </form>
-      </a>
-      <a href="#archive">Archive</a>
-      <a href="#completed">View Completed Stories</a>
-    </nav>
-  </footer>
+    <span style="clear:both"></span>
   
+  <div id="table_container">
+    <table id=main_table>
+      <tbody>
+        <tr class=stages>
+          <td id=backlog>
+          </td>
+
+          <td id=current>
+          </td>
+
+          <td id=in_progress>
+          </td>
+
+          <td id=review>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
   <div class="overlaying_page hidden" id=archive>
     <header>
     <h1>Archive (<a href="#">Return to Project</a>)</h1>
