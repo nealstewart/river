@@ -302,3 +302,11 @@ tr.states td:last-child {
   min-height: 150%;
   margin-bottom: 0;
 }
+.overlaying_page {
+  position: absolute;
+  top: 65px;
+  z-index: 101;
+  background-color: #FFF;
+  width: 100%;
+  height: 100%;
+}

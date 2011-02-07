@@ -75,7 +75,7 @@ Application.Controller = Backbone.Controller.extend({
       this._archiveView.render();
     }
 
-    $(this._archiveView.el).removeClass('hidden');
+    $(this._archiveView.el).show('slide', {direction: "left"});
 
     /*
       render the archive.
@@ -94,7 +94,8 @@ Application.Controller = Backbone.Controller.extend({
       this._completedView.render();
     }
 
-    $(this._completedView.el).removeClass('hidden');
+    $(this._completedView.el).show('slide', {direction: "right"});
+
 
     /*
       render the archive.
