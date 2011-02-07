@@ -12,12 +12,20 @@ var StoryCreator = Backbone.View.extend({
   events: {
     "click": "click",
     "keydown textarea": "textareaHandler",
-    "keypress textarea": "textareaHandler"
+    "keypress textarea": "textareaHandler",
+    "selectstart div" : "selectCanceller",
+    "selectstart span" : "selectCanceller",
+    "dragstart div" : "selectCanceller",
+    "dragstart span" : "selectCanceller"
+  },
+
+  selectCanceller : function(evt) {
+    evt.preventDefault();
   },
 
   click: function(evt) {
-    if (evt.srcElement == this.el[0]) { // only toggle if you click the link
-      this.toggleCreator();
+    if (evt.srcElement == this.$('span')[0] || evt.srcElement == this.el[0]) {
+      this.toggleCreator(evt);
     }
 
     evt.preventDefault();
@@ -29,6 +37,9 @@ var StoryCreator = Backbone.View.extend({
         this.submitStory();
         evt.preventDefault();
       }
+    } else if (evt.keyCode == 27) {
+      console.log("toggled");
+      this.turnOff();
     }
   },
 
@@ -67,22 +78,40 @@ var StoryCreator = Backbone.View.extend({
     throw "not implemented";
   },
 
-  toggleCreator: function(evt) {
+  turnOn : function(evt) {
+    var form = this.$('form');
+    $(this.el).removeClass('down');
+    $(this.el).addClass('up');
+
+    form.removeClass('hidden');
+    form.position({
+      of: $(this.el),
+      my: "center top",
+      at: "center bottom"
+    });
+
+    form.find('textarea').focus();
+  },
+
+  turnOff : function(evt) {
+    var form = this.$('form');
+    $(this.el).removeClass('up');
+    $(this.el).addClass('down');
+
+    form.addClass('hidden');
+    form.find('textarea').blur();
+  },
+
+  toggleCreator: function(evt, noBlur) {
     var form = this.$('form');
 
     if (form.hasClass('hidden')) {
-      form.removeClass('hidden');
-      form.position({
-        of: $(this.el),
-        my: "center bottom",
-        at: "center top"
-      });
-
-      form.find('textarea').focus();
-
+      this.turnOn();
     } else {
-      form.addClass('hidden');
-      form.find('textarea').val('').blur();
+      this.turnOff(evt, noBlur);
     }
+
+
+    evt.preventDefault();
   }
 });
