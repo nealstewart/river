@@ -144,10 +144,26 @@ Application.initializeGlobalViews = function() {
   });
 };
 
+Application.hacksForDisplaying = function() {
+  var resizingFunction = function() {
+    var tb = $('#main_table');
+    var heightToSet = $(window).height() - ($('header#main').height() + $('#headers').height());
+    var offset = 28;
+    tb.height(heightToSet - offset);
+    var tableContainer = tb.parent();
+    console.log(tableContainer);
+    tableContainer.height(heightToSet - offset);
+  };
+
+  resizingFunction();
+  $(window).bind('resize', resizingFunction);
+}
+
 Application.initialize = function() {
   this.initializeCollections();
   this.initializeStages();
   this.initializeGlobalViews();
+  this.hacksForDisplaying();
 
   new Application.Controller;
   Backbone.history.start();
